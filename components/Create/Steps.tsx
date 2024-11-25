@@ -310,9 +310,15 @@ const Steps: React.FC<StepsProps> = ({ step, setStep }) => {
             <h1>${jobTitle}</h1>
           </div>
           <div class="main-p">
-            <p>I live in ${city}, I studied at ${school}.</p>
-            <p>I work in ${company}.</p>
-            <p>My phone number: ${phone}</p>
+            <div style="font-family: 'Arial', sans-serif; line-height: 1.6;">
+    <p>🌍 <strong>Hi there! I’m based in <span style="color: #3498db;">${city}</span></strong>, a place close to my heart where creativity meets opportunity. 🏙️</p>
+    <p>🎓 I had the privilege of studying at <span style="color: #e74c3c; font-weight: bold;">${school}</span>, where I laid the foundation for my passion for innovation and learning. 📚✨</p>
+    <p>💼 Currently, I’m part of the amazing team at <span style="color: #2ecc71; font-weight: bold;">${company}</span>, where I contribute to building groundbreaking solutions that make a difference. 🚀</p>
+    <p>📱 **Want to connect?** Feel free to reach me at my personal number: <span style="color: #9b59b6; font-weight: bold;">${phone}</span>. I’d love to hear from you! 🤝</p>
+    <p>🎯 I’m passionate about technology, creating meaningful projects, and collaborating with amazing people. Let’s make something extraordinary together! 💡</p>
+    <p style="text-align: center; color: #34495e;">✨ <em>“Dream big, work hard, and never stop learning.”</em> ✨</p>
+</div>
+
           </div>
           <div class="main-email">
             <a href="mailto:${email}?subject=Subject&body=Message">
