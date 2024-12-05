@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
@@ -33,18 +33,76 @@ const Step1: React.FC<Step1Props> = ({
   handleImageUpload,
   shadowColor,
 }) => {
+  const [errors, setErrors] = useState({
+    name: "",
+    jobTitle: "",
+    email: "",
+    phone: "",
+    city: "",
+  });
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    if (/\d/.test(input)) {
+      setErrors((prev) => ({ ...prev, name: "Name cannot contain numbers" }));
+    } else {
+      setErrors((prev) => ({ ...prev, name: "" }));
+      setName(input);
+    }
+  };
+
+  const handleJobTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    if (/\d/.test(input)) {
+      setErrors((prev) => ({
+        ...prev,
+        jobTitle: "Job Title cannot contain numbers",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, jobTitle: "" }));
+      setJobTitle(input);
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    setEmail(input);
+    if (input && !input.endsWith("@gmail.com")) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Email must contain '@gmail.com'",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, email: "" }));
+    }
+  };
+  
+
+  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    if (/[^a-zA-Z\s]/.test(input)) {
+      setErrors((prev) => ({
+        ...prev,
+        city: "City name can only contain alphabets and spaces",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, city: "" }));
+      setCity(input);
+    }
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = e.target.value.replace(/\D/g, '');
-    
-    if (input.length > 0) {
-      const firstPart = input.substring(0, 6).match(/.{1,3}/g)?.join(' ') || '';
-      
-      const secondPart = input.substring(6).match(/.{1,2}/g)?.join(' ') || '';
-      
-      input = [firstPart, secondPart].filter(Boolean).join(' ');
+    let input = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    if (input.length > 10) input = input.substring(0, 10); // Limit to 10 digits
+
+    if (input.length !== 10) {
+      setErrors((prev) => ({
+        ...prev,
+        phone: "Phone number must contain exactly 10 digits",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, phone: "" }));
     }
-  
     setPhone(input);
   };
 
@@ -61,8 +119,9 @@ const Step1: React.FC<Step1Props> = ({
                 id="name"
                 placeholder="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleNameChange}
               />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
             <div>
               <Label htmlFor="JobTitle">Job Title</Label>
@@ -72,8 +131,11 @@ const Step1: React.FC<Step1Props> = ({
                 id="JobTitle"
                 placeholder="position"
                 value={jobTitle}
-                onChange={(e) => setJobTitle(e.target.value)}
+                onChange={handleJobTitleChange}
               />
+              {errors.jobTitle && (
+                <p className="text-red-500 text-sm">{errors.jobTitle}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-1.5 items-center justify-center">
@@ -102,8 +164,11 @@ const Step1: React.FC<Step1Props> = ({
                 id="Email"
                 placeholder="user@gmail.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
             </div>
             <div>
               <Label htmlFor="City">City</Label>
@@ -113,8 +178,11 @@ const Step1: React.FC<Step1Props> = ({
                 id="City"
                 placeholder="city"
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={handleCityChange}
               />
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city}</p>
+              )}
             </div>
           </div>
           <div className="w-1/2">
@@ -127,6 +195,9 @@ const Step1: React.FC<Step1Props> = ({
               value={phone}
               onChange={handlePhoneChange}
             />
+            {errors.phone && (
+              <p className="text-red-500 text-sm">{errors.phone}</p>
+            )}
           </div>
         </div>
       </div>

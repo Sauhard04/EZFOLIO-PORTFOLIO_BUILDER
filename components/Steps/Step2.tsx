@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import DateSelector from "../Create/DateSelector";
@@ -10,6 +10,25 @@ interface Step2Props {
 }
 
 const Step2: React.FC<Step2Props> = ({ school, setSchool, shadowColor }) => {
+  const [error, setError] = useState("");
+
+  const handleSchoolChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let input = e.target.value;
+
+    // Allow only alphabets and spaces
+    if (/[^a-zA-Z\s]/.test(input)) {
+      setError("School name can only contain alphabets and spaces");
+      // Remove invalid characters
+      input = input.replace(/[^a-zA-Z\s]/g, "");
+    } else if (!input.trim()) {
+      setError("School name cannot be empty");
+    } else {
+      setError("");
+    }
+
+    setSchool(input); // Update the valid input in state
+  };
+
   return (
     <div className="p-5">
       <div className="flex flex-col gap-10 md:gap-3 lg:gap-10">
@@ -21,8 +40,9 @@ const Step2: React.FC<Step2Props> = ({ school, setSchool, shadowColor }) => {
             id="school"
             placeholder="abc University"
             value={school}
-            onChange={(e) => setSchool(e.target.value)}
+            onChange={handleSchoolChange}
           />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>
         <div>
           <DateSelector />

@@ -17,6 +17,23 @@ const yearOptions = Array.from({ length: 50 }, (_, i) => ({
   label: 1980 + i,
 }));
 
+const customStyles = {
+  control: (base: any) => ({
+    ...base,
+    color: "black", // Text color in the input field
+    backgroundColor: "white", // Background color of the dropdown
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    color: "black", // Text color for the selected value
+  }),
+  option: (base: any, state: any) => ({
+    ...base,
+    color: "black", // Text color in the options list
+    backgroundColor: state.isFocused ? "#f0f0f0" : "white", // Highlight background on focus
+  }),
+};
+
 const DateSelector = () => {
   const { control, handleSubmit } = useForm();
 
@@ -25,7 +42,10 @@ const DateSelector = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row gap-5 md:gap-0 justify-between">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col lg:flex-row gap-5 md:gap-0 justify-between"
+    >
       <div className="flex flex-col gap-3">
         <h2 className="font-semibold">Start Date</h2>
         <div className="flex gap-4">
@@ -38,6 +58,7 @@ const DateSelector = () => {
                 options={dayOptions}
                 placeholder="Day"
                 className="w-28"
+                styles={customStyles} // Apply custom styles
               />
             )}
           />
@@ -50,6 +71,7 @@ const DateSelector = () => {
                 options={monthOptions}
                 placeholder="Month"
                 className="w-28"
+                styles={customStyles} // Apply custom styles
               />
             )}
           />
@@ -62,6 +84,7 @@ const DateSelector = () => {
                 options={yearOptions}
                 placeholder="Year"
                 className="w-28"
+                styles={customStyles} // Apply custom styles
               />
             )}
           />
@@ -80,6 +103,7 @@ const DateSelector = () => {
                 options={dayOptions}
                 placeholder="Day"
                 className="w-28"
+                styles={customStyles} // Apply custom styles
               />
             )}
           />
@@ -92,6 +116,7 @@ const DateSelector = () => {
                 options={monthOptions}
                 placeholder="Month"
                 className="w-28"
+                styles={customStyles} // Apply custom styles
               />
             )}
           />
@@ -104,6 +129,7 @@ const DateSelector = () => {
                 options={yearOptions}
                 placeholder="Year"
                 className="w-28"
+                styles={customStyles} // Apply custom styles
               />
             )}
           />
