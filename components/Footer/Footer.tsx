@@ -18,13 +18,13 @@ const Footer = () => {
         
         <ConfettiPage />
         <div className="flex items-center justify-center gap-3">
-          <Link href={"https://www.linkedin.com/in/iuhiuauh9a/"}>
+          <Link href={"https://www.linkedin.com/company/105064504/admin/dashboard/"}>
             <IoLogoLinkedin size={30} />
           </Link>
-          <Link href={"https://www.github.com/canbedirjhbai"}>
+          <Link href={""}>
             <FaGithub size={30} />
           </Link>
-          <Link href={"https://www.x.com/jiaokjnaq09"}>
+          <Link href={""}>
             <FaXTwitter size={25} />
           </Link>
         </div>
